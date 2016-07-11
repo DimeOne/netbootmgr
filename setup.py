@@ -11,7 +11,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 setup(
     name='django-netbootmgr',
     version='0.1',
-    packages=['netbootmgr.hostdb', 'netbootmgr.hostdb.fixtures', 'netbootmgr.hostdb.migrations', 'netbootmgr.configstore', 'netbootmgr.hostdb.migrations', 'netbootmgr.bootmgr', 'netbootmgr.bootmgr.fixtures', 'netbootmgr.bootmgr.migrations', 'netbootmgr.bootmgr.helpers', ],
+    packages=['netbootmgr.hostdb', 'netbootmgr.hostdb.fixtures', 'netbootmgr.hostdb.migrations', 'netbootmgr.configstore', 'netbootmgr.configstore.migrations', 'netbootmgr.bootmgr', 'netbootmgr.bootmgr.fixtures', 'netbootmgr.bootmgr.migrations', 'netbootmgr.bootmgr.helpers', ],
     include_package_data=True,
     license='',  # example license
     description='A Network Boot Management Interface.',
@@ -22,7 +22,7 @@ setup(
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: NetBootManager',  # replace "X.Y" as appropriate
+        'Framework :: Django :: NetBootManager',
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
