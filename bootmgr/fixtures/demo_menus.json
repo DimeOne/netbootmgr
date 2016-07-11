@@ -1,0 +1,34 @@
+[
+{
+  "model": "bootmgr.menu",
+  "pk": 1,
+  "fields": {
+    "name": "Demo Menu",
+    "description": "Default Demo Menu"
+  }
+},
+{
+  "model": "bootmgr.menu",
+  "pk": 2,
+  "fields": {
+    "name": "Live Systems",
+    "description": "Live Systems Menu"
+  }
+},
+{
+  "model": "bootmgr.menu",
+  "pk": 3,
+  "fields": {
+    "name": "System Setups",
+    "description": "System Setup Menu"
+  }
+},
+{
+  "model": "bootmgr.menu",
+  "pk": 4,
+  "fields": {
+    "name": "Unattended Setups",
+    "description": "Unattended Setup Menu"
+  }
+}
+]

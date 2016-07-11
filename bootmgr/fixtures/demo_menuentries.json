@@ -1,0 +1,100 @@
+[
+{
+  "model": "bootmgr.menuentry",
+  "pk": 1,
+  "fields": {
+    "menu": 1,
+    "shortcut": "0x13",
+    "order": 1,
+    "content_type": [
+      "bootmgr",
+      "action"
+    ],
+    "object_id": 3
+  }
+},
+{
+  "model": "bootmgr.menuentry",
+  "pk": 2,
+  "fields": {
+    "menu": 1,
+    "shortcut": "c",
+    "order": 2,
+    "content_type": [
+      "bootmgr",
+      "action"
+    ],
+    "object_id": 4
+  }
+},
+{
+  "model": "bootmgr.menuentry",
+  "pk": 3,
+  "fields": {
+    "menu": 1,
+    "shortcut": "r",
+    "order": 3,
+    "content_type": [
+      "bootmgr",
+      "action"
+    ],
+    "object_id": 1
+  }
+},
+{
+  "model": "bootmgr.menuentry",
+  "pk": 4,
+  "fields": {
+    "menu": 1,
+    "shortcut": "0x0F",
+    "order": 4,
+    "content_type": [
+      "bootmgr",
+      "action"
+    ],
+    "object_id": 2
+  }
+},
+{
+  "model": "bootmgr.menuentry",
+  "pk": 5,
+  "fields": {
+    "menu": 1,
+    "shortcut": "0x05",
+    "order": 5,
+    "content_type": [
+      "bootmgr",
+      "action"
+    ],
+    "object_id": 10
+  }
+},
+{
+  "model": "bootmgr.menuentry",
+  "pk": 6,
+  "fields": {
+    "menu": 2,
+    "shortcut": "d",
+    "order": 1,
+    "content_type": [
+      "bootmgr",
+      "action"
+    ],
+    "object_id": 21
+  }
+},
+{
+  "model": "bootmgr.menuentry",
+  "pk": 7,
+  "fields": {
+    "menu": 2,
+    "shortcut": "u",
+    "order": 2,
+    "content_type": [
+      "bootmgr",
+      "action"
+    ],
+    "object_id": 20
+  }
+}
+]

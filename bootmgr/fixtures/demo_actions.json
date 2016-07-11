@@ -1,0 +1,93 @@
+[
+{
+  "model": "bootmgr.action",
+  "pk": 1,
+  "fields": {
+    "name": "Reboot",
+    "description": "Reboot Host.",
+    "render_type": 1,
+    "action_category": 5,
+    "command": "echo Rebooting. \r\nreboot || echo reboot failed",
+    "creation_date": "2016-06-19T00:06:31.476Z",
+    "change_date": "2016-07-10T23:03:50.995Z"
+  }
+},
+{
+  "model": "bootmgr.action",
+  "pk": 2,
+  "fields": {
+    "name": "PowerOff",
+    "description": "PowerOff Host.",
+    "render_type": 1,
+    "action_category": 5,
+    "command": "echo Powering Off.\r\npoweroff || echo PowerOff failed.",
+    "creation_date": "2016-06-19T00:07:06.897Z",
+    "change_date": "2016-07-10T23:05:04.399Z"
+  }
+},
+{
+  "model": "bootmgr.action",
+  "pk": 3,
+  "fields": {
+    "name": "iPXE Shell",
+    "description": "Launch Interactive iPXE Shell",
+    "render_type": 1,
+    "action_category": 3,
+    "command": "echo Launching interactive iPXE Shell\r\nshell || echo Failed to launch interactive iPXE Shell.",
+    "creation_date": "2016-07-08T19:12:19.079Z",
+    "change_date": "2016-07-10T17:11:39.930Z"
+  }
+},
+{
+  "model": "bootmgr.action",
+  "pk": 4,
+  "fields": {
+    "name": "iPXE Config",
+    "description": "iPXE Builtin Config",
+    "render_type": 1,
+    "action_category": 3,
+    "command": "config",
+    "creation_date": "2016-07-10T00:16:10.738Z",
+    "change_date": "2016-07-10T17:11:34.818Z"
+  }
+},
+{
+  "model": "bootmgr.action",
+  "pk": 10,
+  "fields": {
+    "name": "Demo boot.salstar.sk",
+    "description": "Boot from External Demo at http://boot.salstar.sk",
+    "render_type": 1,
+    "action_category": 3,
+    "command": "chain http://boot.salstar.sk",
+    "creation_date": "2016-07-10T23:09:10.179Z",
+    "change_date": "2016-07-10T23:09:10.179Z"
+  }
+},
+{
+  "model": "bootmgr.action",
+  "pk": 20,
+  "fields": {
+    "name": "Ubuntu Live (LTS)",
+    "description": "Boot latest Ubuntu Live Linux LTS version.",
+    "render_type": 2,
+    "action_category": 1,
+    "command": "echo \"should be booting Ubuntu Live (LTS)\"",
+    "creation_date": "2016-06-26T21:35:12.762Z",
+    "change_date": "2016-07-10T17:07:36.836Z"
+  }
+},
+{
+  "model": "bootmgr.action",
+  "pk": 21,
+  "fields": {
+    "name": "Desinfec't 2016",
+    "description": "Boot Desinfect 2016",
+    "render_type": 2,
+    "action_category": 1,
+    "command": "isset ${http_storage_baseurl} || goto missing_http_storage_baseurl\r\nisset ${nfs_storage_root} || goto missing_nfs_storage_root \r\n\r\nset http_baseurl=${http_storage_baseurl}/desinfect2016\r\nset nfs_root=${nfs_storage_root}/desinfect2016\r\nset lang={{ settings.langcode_ISO_639_1|default:\"de\" }}\r\nset keyboard={{ settings.langcode_ISO_639_1|default:\"de\" }}\r\n\r\n:boot_section\r\nkernel ${http_baseurl}/vmlinuz netboot=nfs nfsroot=${nfs_root} boot=casper quiet splash -- debian installer/language=${lang} console-setup/layoutcode?=${keyboard}\r\ninitrd ${http_baseurl}/initrd.lz\r\nboot\r\n\r\n:missing_http_storage_baseurl\r\necho http_storage_baseurl has not been configured, unable to locate required files. && goto reconnect_delay\r\n\r\n:missing_nfs_storage_root \r\necho nfs_storage_root has not been configured, unable to locate required files. && goto reconnect_delay",
+    "creation_date": "2016-07-09T21:49:33.726Z",
+    "change_date": "2016-07-10T16:52:16.407Z"
+  }
+}
+]

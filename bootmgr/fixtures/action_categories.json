@@ -1,0 +1,42 @@
+[
+{
+  "model": "bootmgr.actioncategory",
+  "pk": 1,
+  "fields": {
+    "name": "Live System",
+    "description": "Live System with Interactive Session."
+  }
+},
+{
+  "model": "bootmgr.actioncategory",
+  "pk": 2,
+  "fields": {
+    "name": "Live Setup",
+    "description": "Live Setup with Interactive Session."
+  }
+},
+{
+  "model": "bootmgr.actioncategory",
+  "pk": 3,
+  "fields": {
+    "name": "Interactive Script",
+    "description": "Boot script that requires user interaction and may never finish without interaction."
+  }
+},
+{
+  "model": "bootmgr.actioncategory",
+  "pk": 4,
+  "fields": {
+    "name": "Unattended Setup",
+    "description": "Unattended Setup that should not require interaction to complete."
+  }
+},
+{
+  "model": "bootmgr.actioncategory",
+  "pk": 5,
+  "fields": {
+    "name": "Unattended Script",
+    "description": "Unattended script that should not require interaction to complete."
+  }
+}
+]
