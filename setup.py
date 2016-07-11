@@ -7,10 +7,11 @@ with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
 # allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
+
 setup(
     name='django-netbootmgr',
     version='0.1',
-    packages=['netbootmgr',],
+    packages=['netbootmgr.hostdb', 'netbootmgr.hostdb.fixtures', 'netbootmgr.hostdb.migrations', 'netbootmgr.configstore', 'netbootmgr.hostdb.migrations', 'netbootmgr.bootmgr', 'netbootmgr.bootmgr.fixtures', 'netbootmgr.bootmgr.migrations', 'netbootmgr.bootmgr.helpers', ],
     include_package_data=True,
     license='',  # example license
     description='A Network Boot Management Interface.',
