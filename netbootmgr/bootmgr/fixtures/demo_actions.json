@@ -20,14 +20,27 @@
     "description": "PowerOff Host.",
     "render_type": 1,
     "action_category": 5,
-    "command": "echo Powering Off.\r\npoweroff || echo PowerOff failed.",
+    "command": "echo Powering Off.\r\npoweroff || echo poweroff command failed.\r\n\r\necho downloading poweroff.com\r\nchain --replace --autofree {{ settings.http_storage_baseurl }}poweroff.com || echo external poweroff failed.",
     "creation_date": "2016-06-19T00:07:06.897Z",
-    "change_date": "2016-07-10T23:05:04.399Z"
+    "change_date": "2016-07-12T15:50:52.494Z"
   }
 },
 {
   "model": "bootmgr.action",
   "pk": 3,
+  "fields": {
+    "name": "Boot to Harddisk",
+    "description": "Boot2HDD",
+    "render_type": 1,
+    "action_category": 5,
+    "command": "{{ settings.boot2hdd_command|default:'sanboot --no-describe --drive 0x80'  }} || echo failed to boot2hdd",
+    "creation_date": "2016-07-12T15:54:05.916Z",
+    "change_date": "2016-07-12T16:01:41.303Z"
+  }
+},
+{
+  "model": "bootmgr.action",
+  "pk": 4,
   "fields": {
     "name": "iPXE Shell",
     "description": "Launch Interactive iPXE Shell",
@@ -40,7 +53,7 @@
 },
 {
   "model": "bootmgr.action",
-  "pk": 4,
+  "pk": 5,
   "fields": {
     "name": "iPXE Config",
     "description": "iPXE Builtin Config",
@@ -54,6 +67,19 @@
 {
   "model": "bootmgr.action",
   "pk": 10,
+  "fields": {
+    "name": "Official iPXE Demo",
+    "description": "Official iPXE Demo Script.",
+    "render_type": null,
+    "action_category": 3,
+    "command": "chain http://boot.ipxe.org/demo/boot.php",
+    "creation_date": "2016-07-12T15:55:19.551Z",
+    "change_date": "2016-07-12T15:56:32.970Z"
+  }
+},
+{
+  "model": "bootmgr.action",
+  "pk": 11,
   "fields": {
     "name": "Demo boot.salstar.sk",
     "description": "Boot from External Demo at http://boot.salstar.sk",
@@ -85,9 +111,35 @@
     "description": "Boot Desinfect 2016",
     "render_type": 2,
     "action_category": 1,
-    "command": "isset ${http_storage_baseurl} || goto missing_http_storage_baseurl\r\nisset ${nfs_storage_root} || goto missing_nfs_storage_root \r\n\r\nset http_baseurl=${http_storage_baseurl}/desinfect2016\r\nset nfs_root=${nfs_storage_root}/desinfect2016\r\nset lang={{ settings.langcode_ISO_639_1|default:\"de\" }}\r\nset keyboard={{ settings.langcode_ISO_639_1|default:\"de\" }}\r\n\r\n:boot_section\r\nkernel ${http_baseurl}/vmlinuz netboot=nfs nfsroot=${nfs_root} boot=casper quiet splash -- debian installer/language=${lang} console-setup/layoutcode?=${keyboard}\r\ninitrd ${http_baseurl}/initrd.lz\r\nboot\r\n\r\n:missing_http_storage_baseurl\r\necho http_storage_baseurl has not been configured, unable to locate required files. && goto reconnect_delay\r\n\r\n:missing_nfs_storage_root \r\necho nfs_storage_root has not been configured, unable to locate required files. && goto reconnect_delay",
+    "command": "isset ${http_storage_baseurl} || goto missing_http_storage_baseurl\r\nisset ${nfs_storage_root} || goto missing_nfs_storage_root \r\n\r\nset http_baseurl ${http_storage_baseurl}desinfect2016/casper\r\nset nfs_root ${nfs_storage_root}boot/desinfect2016\r\nset lang {{ settings.langcode_ISO_639_1|default:\"de\" }}\r\nset keyboard {{ settings.langcode_ISO_639_1|default:\"de\" }}\r\n\r\ngoto boot_section\r\n\r\n:missing_http_storage_baseurl\r\necho http_storage_baseurl has not been configured, unable to locate required files. && goto action_failed\r\n\r\n:missing_nfs_storage_root \r\necho nfs_storage_root has not been configured, unable to locate required files. && goto action_failed\r\n\r\n:boot_section\r\nkernel ${http_baseurl}/vmlinuz netboot=nfs nfsroot=${nfs_root} boot=casper quiet splash -- debian installer/language=${lang} console-setup/layoutcode?=${keyboard}\r\ninitrd ${http_baseurl}/initrd.lz\r\nboot || goto action:failed",
     "creation_date": "2016-07-09T21:49:33.726Z",
-    "change_date": "2016-07-10T16:52:16.407Z"
+    "change_date": "2016-07-12T15:45:05.327Z"
+  }
+},
+{
+  "model": "bootmgr.action",
+  "pk": 22,
+  "fields": {
+    "name": "CloneZilla DiskUtility (Live)",
+    "description": "Debian / Ubuntu based Disk Cloning Tool.",
+    "render_type": 2,
+    "action_category": 1,
+    "command": "isset ${http_storage_baseurl} || goto missing_http_storage_baseurl\r\nisset ${nfs_storage_root} || goto missing_nfs_storage_root \r\n\r\nset http_baseurl ${http_storage_baseurl}clonezilla\r\nset nfs_image_root ${nfs_storage_root}images\r\nset locales {{ settings.lang_culture|default:\"de_DE\" }}.UTF-8\r\nset keyboard {{ settings.langcode_ISO_639_1|default:\"de\" }}\r\n\r\ngoto boot_section\r\n\r\n:missing_http_storage_baseurl\r\necho http_storage_baseurl has not been configured, unable to locate required files. && goto action_failed\r\n\r\n:missing_nfs_storage_root \r\necho nfs_storage_root has not been configured, unable to locate required files. && goto action_failed\r\n\r\n:boot_section\r\nkernel ${http_baseurl}/vmlinuz boot=live config noprompt vga=791 toram=filesystem.squashfs ip=frommedia nosplash ocs_live_run=\"ocs-live-general\" locales=${locales} keyboard-layouts=${keyboard} ocs_prerun=\"dhclient -v eth0\" ocs_prerun1=\"sleep 2\" ocs_prerun2=\"mount ${nfs_image_root} /home/partimag\" ocs_prerun3=\"sleep 2\" fetch=${http_baseurl}/filesystem.squashfs\r\ninitrd ${http_baseurl}/initrd.img\r\nboot || goto action_failed",
+    "creation_date": "2016-07-12T14:29:30.128Z",
+    "change_date": "2016-07-12T15:37:32.340Z"
+  }
+},
+{
+  "model": "bootmgr.action",
+  "pk": 51,
+  "fields": {
+    "name": "Custom Action #01",
+    "description": "Placeholder for the first action to make migration easier.",
+    "render_type": 4,
+    "action_category": 5,
+    "command": "echo Custom Action 01 Placeholder. && goto action_failed",
+    "creation_date": "2016-07-12T15:04:22.796Z",
+    "change_date": "2016-07-12T15:04:22.796Z"
   }
 }
 ]

@@ -15,7 +15,7 @@
   "fields": {
     "name": "iPXE Script",
     "description": "Default iPXE Render Type with local variables, sections and exit as termination.",
-    "command_pre": "{# creating settings as local variables #}{% if settings|length > 0 %}{% for setting_name, setting_value in settings.items %}set {{ setting_name }} {{ setting_value }}{% endfor %}{% endif %}",
+    "command_pre": "{# creating settings as local variables #}{% if settings|length > 0 %}{% for setting_name, setting_value in settings.items %}\r\nset {{ setting_name }} {{ setting_value }}{% endfor %}{% endif %}",
     "command_post": ":action_unterminated\r\necho Boot Action not terminated correctly. && goto exit_delay\r\n\r\n:action_failed\r\necho Boot Action failed.\r\n\r\n:exit_delay\r\necho Exiting in {{ site_config.reconnect_delay|default:\"5\" }} seconds, Press CTRL+C to reboot.\r\nsleep {{ site_config.reconnect_delay|default:\"5\" }} || reboot\r\n\r\n:action_exit\r\nexit"
   }
 },
@@ -25,8 +25,8 @@
   "fields": {
     "name": "iPXE Script with Reconnect",
     "description": "Default iPXE Render Type with local variables, sections and reconnect as termination.",
-    "command_pre": "{# creating settings as local variables #}{% if settings|length > 0 %}{% for setting_name, setting_value in settings.items %}set {{ setting_name }} {{ setting_value }}{% endfor %}{% endif %}",
-    "command_post": ":action_unterminated\r\necho Boot Action not terminated correctly. && goto exit_delay\r\n\r\n:action_failed\r\necho Boot Action failed.\r\n\r\n:exit_delay\r\n:reconnect_delay\r\necho Reconnecting in {{ site_config.reconnect_delay|default:\"5\" }} seconds, Press CTRL+C to Exit.\r\nsleep {{ site_config.reconnect_delay|default:\"5\" }} || exit\r\n\r\n:reconnect\r\nchain --autofree --replace {{ site_config.url }}connect/\r\n\r\n:action_exit"
+    "command_pre": "{# creating settings as local variables #}{% if settings|length > 0 %}{% for setting_name, setting_value in settings.items %}\r\nset {{ setting_name }} {{ setting_value }}{% endfor %}{% endif %}",
+    "command_post": ":action_unterminated\r\necho Boot Action not terminated correctly. && goto exit_delay\r\n\r\n:action_failed\r\necho Boot Action failed.\r\n\r\n:exit_delay\r\necho Reconnecting in {{ site_config.reconnect_delay|default:\"15\" }} seconds, Press CTRL+C to exit\r\nsleep {{ site_config.reconnect_delay|default:\"15\" }} || exit\r\n\r\n:action_exit\r\nchain --autofree --replace {{ site_config.url }}connect/"
   }
 },
 {
@@ -34,9 +34,9 @@
   "pk": 4,
   "fields": {
     "name": "iPXE Script Debugging",
-    "description": "Extended iPXE Render Type with local variables, sections and additional output for debugging.",
-    "command_pre": "{# creating settings as local variables and print them for debugging #}{% if settings|length > 0 %}{% for setting_name, setting_value in settings.items %}set {{ setting_name }} {{ setting_value }}\r\necho {{ setting_name }}: {{ setting_value }}{% endfor %}{% else %}echo no settings found.{% endif %}\r\n\r\nset debug=1",
-    "command_post": ":action_unterminated\r\necho Boot Action not terminated correctly. && goto reconnect_delay\r\n\r\n:action_failed\r\necho Boot Action failed.\r\n\r\n:reconnect_delay\r\necho Reconnecting in {{ site_config.reconnect_delay|default:\"15\" }} seconds, Press CTRL+C to exit\r\nsleep {{ site_config.reconnect_delay|default:\"15\" }} || exit\r\n\r\n:reconnect\r\nchain --autofree --replace {{ site_config.url }}connect/"
+    "description": "Extended iPXE Render Type with local variables, sections, reconnect at the end and additional output for debugging.",
+    "command_pre": "{# creating settings as local variables and print them for debugging #}{% if settings|length > 0 %}{% for setting_name, setting_value in settings.items %}\r\nset {{ setting_name }} {{ setting_value }} && echo {{ setting_name }}: {{ setting_value }}{% endfor %}{% else %}echo no settings found.{% endif %}",
+    "command_post": ":action_unterminated\r\necho Boot Action not terminated correctly. && goto exit_delay\r\n\r\n:action_failed\r\necho Boot Action failed.\r\n\r\n:exit_delay\r\necho Reconnecting in {{ site_config.reconnect_delay|default:\"15\" }} seconds, Press CTRL+C to exit\r\nsleep {{ site_config.reconnect_delay|default:\"15\" }} || exit\r\n\r\n:action_exit\r\nchain --autofree --replace {{ site_config.url }}connect/"
   }
 }
 ]
