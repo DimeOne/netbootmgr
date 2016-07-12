@@ -18,5 +18,5 @@ urlpatterns = [
     url(r'^connect/mac/(?P<mac_address>[^/]+)', views.connect, name='connect'),
     url(r'^connect/host/(?P<host_id>[^/]+)', views.connect, name='connect'),
     url(r'^connect', views.connect, name='connect'),
-    url(r'^[/]*$', views.index, name='index'),
+    url(r'^[/]*$', views.connect, name='index'),
 ]
