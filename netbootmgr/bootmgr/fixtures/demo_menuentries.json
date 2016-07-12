@@ -166,7 +166,7 @@
     ],
     "object_id": 22
   }
-}
+},
 {
   "model": "bootmgr.menuentry",
   "pk": 101,
@@ -180,5 +180,5 @@
     ],
     "object_id": 51
   }
-},
+}
 ]
