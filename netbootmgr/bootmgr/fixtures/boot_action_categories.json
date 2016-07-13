@@ -38,5 +38,13 @@
     "name": "Unattended Script",
     "description": "Unattended script that should not require interaction to complete."
   }
+},
+{
+  "model": "bootmgr.actioncategory",
+  "pk": 101,
+  "fields": {
+    "name": "Custom Script",
+    "description": "Custom Script Placeholder."
+  }
 }
 ]

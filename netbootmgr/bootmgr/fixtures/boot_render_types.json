@@ -38,5 +38,25 @@
     "command_pre": "{# creating settings as local variables and print them for debugging #}{% if settings|length > 0 %}{% for setting_name, setting_value in settings.items %}\r\nset {{ setting_name }} {{ setting_value }} && echo {{ setting_name }}: {{ setting_value }}{% endfor %}{% else %}echo no settings found.{% endif %}",
     "command_post": ":action_unterminated\r\necho Boot Action not terminated correctly. && goto exit_delay\r\n\r\n:action_failed\r\necho Boot Action failed.\r\n\r\n:exit_delay\r\necho Reconnecting in {{ site_config.reconnect_delay|default:\"15\" }} seconds, Press CTRL+C to exit\r\nsleep {{ site_config.reconnect_delay|default:\"15\" }} || exit\r\n\r\n:action_exit\r\nchain --autofree --replace {{ site_config.url }}connect/"
   }
+},
+{
+  "model": "bootmgr.actionrendertype",
+  "pk": 5,
+  "fields": {
+    "name": "Ubuntu Live Distribution",
+    "description": "Ubuntu Live Distribution using casper",
+    "command_pre": "{# creating settings as local variables #}{% if settings|length > 0 %}{% for setting_name, setting_value in settings.items %}\r\nset {{ setting_name }} {{ setting_value }}{% endfor %}{% endif %}",
+    "command_post": ":check_ubuntu_boot_dir\r\nisset ${ubuntu_boot_dir} || goto missing_ubuntu_boot_dir\r\n\r\nisset ${http_storage_baseurl} || goto missing_http_storage_baseurl\r\nisset ${nfs_storage_root} || goto missing_nfs_storage_root \r\n\r\n:boot_prepare\r\nset http_baseurl ${http_storage_baseurl}/${ubuntu_boot_dir}/casper\r\nset nfs_root ${nfs_storage_root}/boot/${ubuntu_boot_dir}\r\nset lang {{ settings.langcode_ISO_639_1|default:\"de\" }}\r\nset keyboard {{ settings.langcode_ISO_639_1|default:\"de\" }}\r\nisset ${kernel_name} || set kernel_name vmlinuz.efi\r\nisset ${initrd_name} || set initrd_name initrd.lz\r\n\r\n:boot_section\r\nkernel ${http_baseurl}/${kernel_name} netboot=nfs nfsroot=${nfs_root} boot=casper quiet splash -- debian installer/language=${lang} console-setup/layoutcode?=${keyboard}\r\ninitrd ${http_baseurl}/${initrd_name}\r\nboot || goto action:failed\r\n\r\n:action_unterminated\r\necho Boot Action not terminated correctly. && goto exit_delay\r\n\r\n:missing_ubuntu_boot_dir\r\necho ubuntu_boot_dir has not been configured, and should be set within action template. && goto action_failed\r\n\r\n:missing_http_storage_baseurl\r\necho http_storage_baseurl has not been configured, unable to locate required files. && goto action_failed\r\n\r\n:missing_nfs_storage_root \r\necho nfs_storage_root has not been configured, unable to locate required files. && goto action_failed\r\n\r\n:action_failed\r\necho Boot Action failed.\r\n\r\n:exit_delay\r\necho Exiting in {{ site_config.reconnect_delay|default:\"5\" }} seconds, Press CTRL+C to reboot.\r\nsleep {{ site_config.reconnect_delay|default:\"5\" }} || reboot\r\n\r\n:action_exit\r\nexit"
+  }
+},
+{
+  "model": "bootmgr.actionrendertype",
+  "pk": 101,
+  "fields": {
+    "name": "Custom Render Type",
+    "description": "Placeholder for the first custom render type.",
+    "command_pre": "",
+    "command_post": ""
+  }
 }
 ]

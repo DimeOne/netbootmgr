@@ -30,5 +30,13 @@
     "name": "Unattended Setups",
     "description": "Unattended Setup Menu"
   }
+},
+{
+  "model": "bootmgr.menu",
+  "pk": 101,
+  "fields": {
+    "name": "Custom Menu #01",
+    "description": "Placeholder for the first custom Menu"
+  }
 }
 ]

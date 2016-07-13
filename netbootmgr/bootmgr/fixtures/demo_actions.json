@@ -94,44 +94,57 @@
   "model": "bootmgr.action",
   "pk": 20,
   "fields": {
-    "name": "Ubuntu Live (LTS)",
+    "name": "Ubuntu Live 16.04 (LTS)",
     "description": "Boot latest Ubuntu Live Linux LTS version.",
-    "render_type": 2,
+    "render_type": 6,
     "action_category": 1,
-    "command": "echo \"should be booting Ubuntu Live (LTS)\"",
+    "command": "set ubuntu_boot_dir ubuntu-16.04-desktop-amd64",
     "creation_date": "2016-06-26T21:35:12.762Z",
-    "change_date": "2016-07-10T17:07:36.836Z"
+    "change_date": "2016-07-13T14:03:52.253Z"
   }
 },
 {
   "model": "bootmgr.action",
   "pk": 21,
   "fields": {
-    "name": "Desinfec't 2016",
-    "description": "Boot Desinfect 2016",
-    "render_type": 2,
+    "name": "Ubuntu Gnome Desktop Live 16.04 (LTS)",
+    "description": "Ubuntu 16.04 (LTS) Live Gnome Desktop Edition.",
+    "render_type": 6,
     "action_category": 1,
-    "command": "isset ${http_storage_baseurl} || goto missing_http_storage_baseurl\r\nisset ${nfs_storage_root} || goto missing_nfs_storage_root \r\n\r\nset http_baseurl ${http_storage_baseurl}desinfect2016/casper\r\nset nfs_root ${nfs_storage_root}boot/desinfect2016\r\nset lang {{ settings.langcode_ISO_639_1|default:\"de\" }}\r\nset keyboard {{ settings.langcode_ISO_639_1|default:\"de\" }}\r\n\r\ngoto boot_section\r\n\r\n:missing_http_storage_baseurl\r\necho http_storage_baseurl has not been configured, unable to locate required files. && goto action_failed\r\n\r\n:missing_nfs_storage_root \r\necho nfs_storage_root has not been configured, unable to locate required files. && goto action_failed\r\n\r\n:boot_section\r\nkernel ${http_baseurl}/vmlinuz netboot=nfs nfsroot=${nfs_root} boot=casper quiet splash -- debian installer/language=${lang} console-setup/layoutcode?=${keyboard}\r\ninitrd ${http_baseurl}/initrd.lz\r\nboot || goto action:failed",
-    "creation_date": "2016-07-09T21:49:33.726Z",
-    "change_date": "2016-07-12T15:45:05.327Z"
+    "command": "set ubuntu_boot_dir ubuntu-gnome-16.04-desktop-amd64",
+    "creation_date": "2016-07-13T13:53:35.784Z",
+    "change_date": "2016-07-13T13:53:35.784Z"
   }
 },
 {
   "model": "bootmgr.action",
   "pk": 22,
   "fields": {
-    "name": "CloneZilla DiskUtility (Live)",
-    "description": "Debian / Ubuntu based Disk Cloning Tool.",
-    "render_type": 2,
+    "name": "Desinfec't 2016",
+    "description": "Boot Desinfect 2016",
+    "render_type": 6,
     "action_category": 1,
-    "command": "isset ${http_storage_baseurl} || goto missing_http_storage_baseurl\r\nisset ${nfs_storage_root} || goto missing_nfs_storage_root \r\n\r\nset http_baseurl ${http_storage_baseurl}clonezilla\r\nset nfs_image_root ${nfs_storage_root}images\r\nset locales {{ settings.lang_culture|default:\"de_DE\" }}.UTF-8\r\nset keyboard {{ settings.langcode_ISO_639_1|default:\"de\" }}\r\n\r\ngoto boot_section\r\n\r\n:missing_http_storage_baseurl\r\necho http_storage_baseurl has not been configured, unable to locate required files. && goto action_failed\r\n\r\n:missing_nfs_storage_root \r\necho nfs_storage_root has not been configured, unable to locate required files. && goto action_failed\r\n\r\n:boot_section\r\nkernel ${http_baseurl}/vmlinuz boot=live config noprompt vga=791 toram=filesystem.squashfs ip=frommedia nosplash ocs_live_run=\"ocs-live-general\" locales=${locales} keyboard-layouts=${keyboard} ocs_prerun=\"dhclient -v eth0\" ocs_prerun1=\"sleep 2\" ocs_prerun2=\"mount ${nfs_image_root} /home/partimag\" ocs_prerun3=\"sleep 2\" fetch=${http_baseurl}/filesystem.squashfs\r\ninitrd ${http_baseurl}/initrd.img\r\nboot || goto action_failed",
-    "creation_date": "2016-07-12T14:29:30.128Z",
-    "change_date": "2016-07-12T15:37:32.340Z"
+    "command": "set ubuntu_boot_dir desinfect2016\r\nset kernel_name vmlinuz",
+    "creation_date": "2016-07-09T21:49:33.726Z",
+    "change_date": "2016-07-13T14:03:46.737Z"
   }
 },
 {
   "model": "bootmgr.action",
-  "pk": 51,
+  "pk": 23,
+  "fields": {
+    "name": "CloneZilla DiskUtility (Live)",
+    "description": "Debian / Ubuntu based Disk Cloning Tool.",
+    "render_type": 2,
+    "action_category": 1,
+    "command": "isset ${http_storage_baseurl} || goto missing_http_storage_baseurl\r\nisset ${nfs_storage_root} || goto missing_nfs_storage_root \r\n\r\nset http_baseurl ${http_storage_baseurl}/clonezilla\r\nset nfs_image_root ${nfs_storage_root}/images\r\nset locales {{ settings.lang_culture|default:\"de_DE\" }}.UTF-8\r\nset keyboard {{ settings.langcode_ISO_639_1|default:\"de\" }}\r\n\r\ngoto boot_section\r\n\r\n:missing_http_storage_baseurl\r\necho http_storage_baseurl has not been configured, unable to locate required files. && goto action_failed\r\n\r\n:missing_nfs_storage_root \r\necho nfs_storage_root has not been configured, unable to locate required files. && goto action_failed\r\n\r\n:boot_section\r\nkernel ${http_baseurl}/vmlinuz boot=live config noprompt vga=791 toram=filesystem.squashfs ip=frommedia nosplash ocs_live_run=\"ocs-live-general\" locales=${locales} keyboard-layouts=${keyboard} ocs_prerun=\"dhclient -v eth0\" ocs_prerun1=\"sleep 2\" ocs_prerun2=\"mount ${nfs_image_root} /home/partimag\" ocs_prerun3=\"sleep 2\" fetch=${http_baseurl}/filesystem.squashfs\r\ninitrd ${http_baseurl}/initrd.img\r\nboot || goto action_failed",
+    "creation_date": "2016-07-12T14:29:30.128Z",
+    "change_date": "2016-07-13T12:16:32.112Z"
+  }
+},
+{
+  "model": "bootmgr.action",
+  "pk": 101,
   "fields": {
     "name": "Custom Action #01",
     "description": "Placeholder for the first action to make migration easier.",
