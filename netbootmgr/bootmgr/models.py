@@ -96,7 +96,7 @@ class MenuEntry(models.Model):
 
     def name(self):
         if self.content_object:
-            return "{} / {}".format(self.menu.name, self.content_object.name)
+            return self.content_object.name
         return ""
 
 
