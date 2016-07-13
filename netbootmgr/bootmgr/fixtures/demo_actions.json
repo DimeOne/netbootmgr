@@ -96,7 +96,7 @@
   "fields": {
     "name": "Ubuntu Live 16.04 (LTS)",
     "description": "Boot latest Ubuntu Live Linux LTS version.",
-    "render_type": 6,
+    "render_type": 5,
     "action_category": 1,
     "command": "set ubuntu_boot_dir ubuntu-16.04-desktop-amd64",
     "creation_date": "2016-06-26T21:35:12.762Z",
@@ -109,7 +109,7 @@
   "fields": {
     "name": "Ubuntu Gnome Desktop Live 16.04 (LTS)",
     "description": "Ubuntu 16.04 (LTS) Live Gnome Desktop Edition.",
-    "render_type": 6,
+    "render_type": 5,
     "action_category": 1,
     "command": "set ubuntu_boot_dir ubuntu-gnome-16.04-desktop-amd64",
     "creation_date": "2016-07-13T13:53:35.784Z",
@@ -122,7 +122,7 @@
   "fields": {
     "name": "Desinfec't 2016",
     "description": "Boot Desinfect 2016",
-    "render_type": 6,
+    "render_type": 5,
     "action_category": 1,
     "command": "set ubuntu_boot_dir desinfect2016\r\nset kernel_name vmlinuz",
     "creation_date": "2016-07-09T21:49:33.726Z",
