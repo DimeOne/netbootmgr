@@ -10,9 +10,9 @@ class ActionRenderType(models.Model):
     name = models.CharField(max_length=64, )
     description = models.CharField(max_length=128, blank=True, null=True,
                                    help_text='Description for this Boot Action Type.')
-    command_pre = models.TextField(verbose_name="Pre Action Command", blank=True, null=True,
+    command_pre = models.TextField(verbose_name="Action Template Header", blank=True, null=True,
                                    help_text='Commands to render before Action command.')
-    command_post = models.TextField(verbose_name="Post Action Command", blank=True, null=True,
+    command_post = models.TextField(verbose_name="Action Template Footer", blank=True, null=True,
                                     help_text='Commands to render after Action command.')
 
     class Meta:
