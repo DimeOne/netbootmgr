@@ -91,7 +91,7 @@ class MenuEntry(models.Model):
 
     def __str__(self):
         if self.content_object:
-            return "{} : {}".format(self.content_type, self.content_object.name)
+            return self.content_object.name
         return "Boot Menu Entry #{0}".format(self.id)
 
     def name(self):
