@@ -7,8 +7,7 @@ from netbootmgr.hostdb.models import Host
 from netbootmgr.configstore.models import ConfigTemplate
 
 
-def get_config(request, cfg_name,  host_id):
-
+def get_config(request, cfg_name=None, cfg_id=None, host_id=None):
     host = get_object_or_404(Host, pk=host_id)
     cfg = get_object_or_404(ConfigTemplate, name=cfg_name)
     site = get_current_site(request)
@@ -17,7 +16,4 @@ def get_config(request, cfg_name,  host_id):
 
 
 def index(request):
-    bar = {'jack': 4098, 'sape': 4139}
-    t = Template("fu foo fooo foo 1 {{ CS.jack }} 2 {{ CS.sape }} 3 {{ CS.jak }}")
-    c = RequestContext(request, {'CS': bar})
-    return HttpResponse(t.render(c), content_type="text/plain")
+    pass
