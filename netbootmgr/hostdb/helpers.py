@@ -86,12 +86,19 @@ def render_template(template, context, request=None, recursive=False):
     return Template(template).render(context)
 
 
-def render_host_template(host, template, settings=None, request=None, recursive=False):
+def render_host_template(template, request=None, host=None, settings=None, site_config=None, fallback_objects=None,
+                         recursive=False):
 
-    if settings is None:
-        settings = host.get_custom_settings_dict()
+    if host and settings is None:
+        final_fallback_objects = []
+        if site_config:
+            final_fallback_objects = [site_config]
+        if fallback_objects:
+            final_fallback_objects += fallback_objects
 
-    context = {'host': host, 'settings': settings, 'request': request}
+        settings = host.get_custom_settings_dict(fallback_objects=final_fallback_objects)
+
+    context = {'host': host, 'settings': settings, 'site_config': site_config, 'request': request}
 
     return render_template(template=template, context=context, request=request, recursive=recursive)
 

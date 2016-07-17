@@ -249,11 +249,11 @@ class CustomSettingsRenderTestCase(TestCase):
     def test_custom_settings_render_recursive(self):
         host = Host.objects.get(name="CustomSettingsHostRecursion")
 
-        rendered_template = render_host_template(host, '{{ settings.level_1_ }}', recursive=False)
+        rendered_template = render_host_template(template='{{ settings.level_1_ }}', host=host, recursive=False)
         self.assertEqual('bar', rendered_template, "level 1 setting was not rendered recursively at level 1")
 
-        rendered_template = render_host_template(host, '{{{{ settings.level_{}_ }}}}'.format(MAX_RECURSION_LEVEL),
-                                                 recursive=True)
+        rendered_template = render_host_template(template='{{{{ settings.level_{}_ }}}}'.format(MAX_RECURSION_LEVEL),
+                                                 host=host, recursive=True)
         self.assertEqual('bar', rendered_template,
                          "level {} setting not was rendered recursively".format(MAX_RECURSION_LEVEL))
 

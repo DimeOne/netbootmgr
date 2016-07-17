@@ -21,6 +21,7 @@ class ConfigTemplate(models.Model):
     def __str__(self):
         return self.name
 
-    def render_for_host(self, host, site=None, request=None):
+    def render_for_host(self, host, site_config=None, request=None):
         from netbootmgr.hostdb.helpers import render_host_template
-        return render_host_template(host=host, template=self.template, site=site, request=request)
+        return render_host_template(host=host, template=self.template, site_config=site_config, request=request,
+                                    fallback_objects=[self])

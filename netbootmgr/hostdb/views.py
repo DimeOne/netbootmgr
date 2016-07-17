@@ -2,7 +2,6 @@ from netbootmgr.hostdb.models import Host, Group
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
-from django.contrib.sites.shortcuts import get_current_site
 
 
 class HostIndexView(generic.ListView):

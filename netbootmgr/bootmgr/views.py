@@ -1,11 +1,8 @@
 import re
-
 from netbootmgr.bootmgr.helpers.bootmgr import BootManager
-from netbootmgr.bootmgr.helpers.settings import AUTO_CREATE_NEW_SITES
 from netbootmgr.bootmgr.models import SiteConfig, Action, Menu, MenuEntry
 from django.http import Http404, HttpResponse
 from netbootmgr.hostdb.models import Host
-from netbootmgr.bootmgr.helpers import url_builder
 
 
 def connect(request, host_id=None, mac_address=None, uuid=None):

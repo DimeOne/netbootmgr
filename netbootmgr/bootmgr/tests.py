@@ -268,7 +268,7 @@ class IpxeBuilderTestCase(TestCase):
         from netbootmgr.bootmgr.helpers import ipxe_builder
         self.builder = ipxe_builder
         from django.core.management import call_command
-        call_command("loaddata", 'bootmgr',verbosity=0)
+        # call_command("loaddata", 'demo',verbosity=0)
         self.request = HttpRequest()
         self.request.META['SERVER_NAME'] = "localhost12"
         self.request.META['SERVER_PORT'] = 8000
@@ -294,20 +294,6 @@ class IpxeBuilderTestCase(TestCase):
             self.builder.menu_item(title="menu title", section="section_name", newline=True),
             "Menu Item with newline was not rendered as expected."
         )
-
-    def test_menu_render(self):
-        from netbootmgr.bootmgr.helpers import ipxe_render
-        from netbootmgr.bootmgr.models import Menu
-
-        menu = Menu.objects.get(id=1)
-
-        script = ipxe_render.get_boot_menu_script(
-            request=self.request,
-            builder=self.builder,
-            menu=menu,
-        )
-
-        # self.assertEqual(script,"dummy","dummy message")
 
 
 class ShortcutTestCase(TestCase):

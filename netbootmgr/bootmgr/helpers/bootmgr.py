@@ -30,7 +30,7 @@ class BootManager:
 
         self.action_source = None
         self.action = None
-        self.menu_source = None
+        self.fallback_action = None
         self.menu = None
 
         self.boot_script_finalized = False
@@ -116,12 +116,14 @@ class BootManager:
             filter_objects = []
             if self.host:
                 filter_objects = self.host.get_custom_setting_filter_objects()
+
             if self.action:
                 filter_objects.append(self.action)
                 if self.action.render_type:
                     filter_objects.append(self.action.render_type)
-            if self.menu:
-                filter_objects.append(self.menu)
+                if self.action.action_category:
+                    filter_objects.append(self.action.action_category)
+
             if self.site_config:
                 filter_objects.append(self.site_config)
 
@@ -154,16 +156,12 @@ class BootManager:
             pass
 
         try:
-            fallback = FallbackAction.objects.get(content_type=ContentType.objects.get_for_model(FallbackAction).id,
+            fallback = FallbackAction.objects.get(content_type=ContentType.objects.get_for_model(Host).id,
                                                   object_id=self.host.id)
-            self.action = fallback.action
-            self.action_source = fallback
+            self.fallback_action = fallback.action
             return True
         except FallbackAction.DoesNotExist:
             pass
-
-    def get_menu_source(self):
-        return self.menu_source
 
     def get_menu(self):
         return self.menu
@@ -187,37 +185,43 @@ class BootManager:
             self.redirect_url = url
         self.redirect_required = True
 
+    def build_boot_menu_script(self):
+
+        if self.host:
+            host_id = self.host.id
+        else:
+            host_id = None
+
+        if self.fallback_action:
+            menu_fallback_action = self.fallback_action
+        elif self.site_config.timeout_action:
+            menu_fallback_action = self.site_config.timeout_action
+        else:
+            menu_fallback_action = None
+
+        self.boot_script = self.render.get_boot_menu_script(
+            request=self.request,
+            builder=self.builder,
+            menu=self.menu,
+            back_menu=self.site_config.menu,
+            host_id=host_id,
+            timeout_s=self.site_config.menu_timeout,
+            fallback_action=menu_fallback_action,
+            reload_delay_s=self.site_config.reload_delay,
+            reconnect_delay_s=self.site_config.reconnect_delay,
+            auto_reload=self.site_config.auto_reload,
+            show_reconnect=self.site_config.show_reconnect
+        )
+
     def build_boot_script(self):
 
-        if self.action and (
-                        not self.site_config.show_menu_fallback or not self.menu or self.action_source != 'fallback'):
+        if self.action:
             self.boot_script = self.render.get_boot_action_script(builder=self.builder, action=self.action)
+        elif self.fallback_action and not self.site_config.show_menu_fallback:
+            self.boot_script = self.render.get_boot_action_script(builder=self.builder, action=self.fallback_action)
         elif self.menu:
-            if self.action:
-                menu_fallback_action = self.action
-            elif self.site_config.timeout_action:
-                menu_fallback_action = self.site_config.timeout_action
-
-            if self.host:
-                host_id = self.host.id
-            else:
-                host_id = None
-
-            self.boot_script = self.render.get_boot_menu_script(
-                request=self.request,
-                builder=self.builder,
-                menu=self.menu,
-                back_menu=self.site_config.menu,
-                host_id=host_id,
-                timeout_s=self.site_config.menu_timeout,
-                fallback_action=self.site_config.timeout_action,
-                reload_delay_s=self.site_config.reload_delay,
-                reconnect_delay_s=self.site_config.reconnect_delay,
-                auto_reload=self.site_config.auto_reload,
-                show_reconnect=self.site_config.show_reconnect
-            )
+            self.build_boot_menu_script()
         else:
-            print('neither boot action nor menu set - no script yet')
             self.boot_script = self.builder.echo("No Action or Menu could be found for this host or site.")
 
         self.render_boot_script()

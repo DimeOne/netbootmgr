@@ -54,6 +54,10 @@ class CustomSetting(models.Model):
         models.Q(app_label='hostdb', model='host') |
         models.Q(app_label='hostdb', model='group') |
         models.Q(app_label='bootmgr', model='siteconfig') |
+        models.Q(app_label='bootmgr', model='action') |
+        models.Q(app_label='bootmgr', model='actionrendertype') |
+        models.Q(app_label='bootmgr', model='actioncategory') |
+        models.Q(app_label='configstore', model='configtemplate') |
         models.Q(app_label='', model='')
     ))
 

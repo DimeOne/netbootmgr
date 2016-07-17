@@ -4,7 +4,7 @@ from netbootmgr.bootmgr.helpers import url_builder
 def render_boot_script(request, script, host, site_config, settings):
     from netbootmgr.hostdb.helpers import render_template
 
-    context = {'host': host, 'settings': settings, 'request': request, 'site_config': site_config}
+    context = {'host': host, 'settings': settings, 'site_config': site_config, 'request': request}
 
     return render_template(template=script, context=context, request=request, recursive=True)
 
