@@ -89,14 +89,19 @@ def render_template(template, context, request=None, recursive=False):
 def render_host_template(template, request=None, host=None, settings=None, site_config=None, fallback_objects=None,
                          recursive=False):
 
-    if host and settings is None:
+    if settings is None:
         final_fallback_objects = []
         if site_config:
             final_fallback_objects = [site_config]
         if fallback_objects:
             final_fallback_objects += fallback_objects
+        if host:
+            final_fallback_objects = host.get_custom_setting_filter_objects() + final_fallback_objects
 
-        settings = host.get_custom_settings_dict(fallback_objects=final_fallback_objects)
+        from netbootmgr.hostdb.models import CustomSetting
+        settings = get_settings_dict(
+            CustomSetting.objects.filter(
+                get_settings_filter_for_objects(final_fallback_objects, add_global=True)))
 
     context = {'host': host, 'settings': settings, 'site_config': site_config, 'request': request}
 
