@@ -13,9 +13,9 @@ setup(
     version='0.1',
     packages=['netbootmgr.hostdb', 'netbootmgr.hostdb.fixtures', 'netbootmgr.hostdb.migrations', 'netbootmgr.configstore', 'netbootmgr.configstore.migrations', 'netbootmgr.bootmgr', 'netbootmgr.bootmgr.fixtures', 'netbootmgr.bootmgr.migrations', 'netbootmgr.bootmgr.helpers', ],
     include_package_data=True,
-    license='',  # example license
+    license='',
     description='A Network Boot Management Interface.',
-    long_description=README,
+    long_description=README.rst,
     url='https://netbootmgr.dominic86.de/',
     author='Dominic Schroeder',
     author_email='dev@dominic86.de',

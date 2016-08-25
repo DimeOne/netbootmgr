@@ -1,9 +1,9 @@
-=====
+
 Net Boot Manager
 =====
 
 
-Net Boot Manager is a simple Django app to manage Network Boot Environments.
+Net Boot Manager is a set of Django apps to manage Network Boot Environments.
 
 Quick start
 -----------
