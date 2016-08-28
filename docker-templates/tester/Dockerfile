@@ -1,10 +1,11 @@
 FROM django:latest
 MAINTAINER Dominic S. "docker@dominic86.de"
 
-RUN pip install https://git.dominic86.de/netbootmgr/django_netbootmgr/archive/stable.tar.gz && \
-	pip install django-jenkins coverage pep8 pyflakes
+RUN pip install django-jenkins coverage pep8 pyflakes
 
-RUN mkdir -p /app/data && \
+RUN wget -O - https://git.dominic86.de/netbootmgr/django_netbootmgr/archive/master.tar.gz | tar xzf - django_netbootmgr/netbootmgr && \
+	mv django_netbootmgr/netbootmgr netbootmgr && \
+	mkdir -p /app/data && \
 	mkdir -p /app/src && \
 	mkdir -p /app/django_netbootmgr && \
 	mkdir -p /app/reports
