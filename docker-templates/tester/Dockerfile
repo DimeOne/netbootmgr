@@ -10,7 +10,7 @@ WORKDIR /app
 
 RUN wget -O - https://git.dominic86.de/netbootmgr/django_netbootmgr/archive/master.tar.gz | tar xzf - django_netbootmgr/netbootmgr && \
 	mv django_netbootmgr/netbootmgr netbootmgr && \
-	rmdir django_netbootmgr &&
+	rmdir django_netbootmgr && \
 	mkdir -p /app/data && \
 	mkdir -p /app/src && \
 	mkdir -p /app/reports
