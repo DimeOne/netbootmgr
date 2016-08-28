@@ -1,7 +1,10 @@
 FROM django:latest
 MAINTAINER Dominic S. "docker@dominic86.de"
 
-RUN pip install django-jenkins coverage pep8 pyflakes
+RUN apt-get update && \
+	apt-get install wget -y && \
+	rm -rf /var/lib/apt/lists/* && \
+	pip install django-jenkins coverage pep8 pyflakes
 
 RUN wget -O - https://git.dominic86.de/netbootmgr/django_netbootmgr/archive/master.tar.gz | tar xzf - django_netbootmgr/netbootmgr && \
 	mv django_netbootmgr/netbootmgr netbootmgr && \
