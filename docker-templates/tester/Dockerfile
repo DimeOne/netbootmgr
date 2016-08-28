@@ -4,7 +4,7 @@ MAINTAINER Dominic S. "docker@dominic86.de"
 RUN apt-get update && \
 	apt-get install wget -y && \
 	rm -rf /var/lib/apt/lists/* && \
-	pip install django-jenkins coverage pep8 pyflakes
+	pip install django-jenkins coverage pep8 pyflakes pylint
 
 WORKDIR /app
 
