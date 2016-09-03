@@ -8,7 +8,7 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-RUN wget -O - https://git.dominic86.de/netbootmgr/netbootmgr/archive/master.tar.gz | tar xzf - netbootmgr/netbootmgr --strip-components=1 && \
+RUN wget -q -O - https://git.dominic86.de/netbootmgr/netbootmgr/archive/master.tar.gz | tar xzf - netbootmgr/netbootmgr --strip-components=1 && \
 	mkdir -p /app/data && \
 	mkdir -p /app/src && \
 	mkdir -p /app/reports
