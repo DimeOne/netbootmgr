@@ -1,4 +1,4 @@
-FROM django:latest
+FROM django:1.10-python3
 MAINTAINER Dominic S. "docker@dominic86.de"
 
 RUN apt-get update && \
@@ -8,9 +8,9 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-RUN wget -O - https://git.dominic86.de/netbootmgr/django_netbootmgr/archive/master.tar.gz | tar xzf - django_netbootmgr/netbootmgr && \
-	mv django_netbootmgr/netbootmgr netbootmgr && \
-	rmdir django_netbootmgr && \
+RUN wget -O - https://git.dominic86.de/netbootmgr/netbootmgr/archive/master.tar.gz | tar xzf - netbootmgr/netbootmgr && \
+	mv netbootmgr/netbootmgr netbootmgr && \
+	rmdir netbootmgr && \
 	mkdir -p /app/data && \
 	mkdir -p /app/src && \
 	mkdir -p /app/reports

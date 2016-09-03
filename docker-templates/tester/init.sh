@@ -14,4 +14,4 @@ if [ ! -f /app/bootmgr/settings.py ]; then
 fi
 
 echo_title starting tests
-exec python manage.py jenkins netbootmgr
+exec python manage.py jenkins netbootmgr --enable-coverage
