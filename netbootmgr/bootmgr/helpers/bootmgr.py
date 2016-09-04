@@ -86,18 +86,21 @@ class BootManager:
 
     def set_or_create_host(self, host_id=None, uuid=None, mac=None):
 
-        try:
-            self.set_host(host_id=host_id, uuid=uuid, mac=mac)
-        except Host.DoesNotExist:
-            if self.site_config.auto_create_hosts:
-                self.create_host(uuid=uuid, mac=mac)
+        if host_id:
+            self.set_host(host_id=host_id)
+        else:
+            try:
+                self.set_host(uuid=uuid, mac=mac)
+            except Host.DoesNotExist:
+                if self.site_config.auto_create_hosts:
+                    self.create_host(uuid=uuid, mac=mac)
 
-                # create host task if site_config has an initial_host_action
-                if self.site_config.initial_host_action:
-                    HostTask.objects.create()
+                    # create host task if site_config has an initial_host_action
+                    if self.site_config.initial_host_action:
+                        HostTask.objects.create()
 
-            else:
-                raise Host.DoesNotExist
+                else:
+                    raise Host.DoesNotExist
 
     def get_host(self):
         return self.host
