@@ -1,8 +1,9 @@
-import re
+from django.http import Http404, HttpResponse
+from django.conf import settings
 from netbootmgr.bootmgr.helpers.bootmgr import BootManager
 from netbootmgr.bootmgr.models import SiteConfig, Action, Menu, MenuEntry
-from django.http import Http404, HttpResponse
 from netbootmgr.hostdb.models import Host
+import re
 
 
 def connect(request, host_id=None, mac_address=None, uuid=None):
@@ -15,13 +16,17 @@ def connect(request, host_id=None, mac_address=None, uuid=None):
     if mac_address and re.compile('^[a-fA-F0-9_-]+$').match(mac_address) is None:
         raise Http404('Mac Address is invalid.')
 
+    if mac_address and not len(mac_address) == 14 and not len(mac_address) == 10:
+        raise Http404('Mac Address has incorrect length.')
+
     # stop if ipxe_uuid was set and has invalid format
     if uuid and re.compile('^[a-zA-Z0-9_-]+$').match(uuid) is None:
         raise Http404('UUID is invalid.')
 
     # stop if not site config can be found or created
     try:
-        site_config, created = SiteConfig.get_or_create_from_request(request)
+        auto_create_sites = getattr(settings, 'BOOTMGR_AUTO_CREATE_NEW_SITES', False)
+        site_config, created = SiteConfig.get_or_create_from_request(request, auto_create_sites)
     except SiteConfig.DoesNotExist:
         raise Http404('SiteConfig not found.')
 

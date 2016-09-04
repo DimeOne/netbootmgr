@@ -3,7 +3,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from netbootmgr.hostdb.models import Host
-from .helpers.settings import AUTO_CREATE_NEW_SITES, BOOT_MENU_SHORTCUT_CHOICES
+from netbootmgr.bootmgr.helpers.settings import BOOT_MENU_SHORTCUT_CHOICES
 
 
 class ActionRenderType(models.Model):
@@ -216,7 +216,7 @@ class SiteConfig(models.Model):
         return cls.objects.get(url=root_url)
 
     @classmethod
-    def get_or_create_from_request(cls, request, create_new_sites=AUTO_CREATE_NEW_SITES):
+    def get_or_create_from_request(cls, request, create_new_sites=False):
         from netbootmgr.bootmgr.helpers.url_builder import get_root_url
         root_url = get_root_url(request)
         created = False

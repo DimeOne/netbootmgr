@@ -11,9 +11,6 @@ class BootManagerAppConfig(AppConfig):
 # MAX_IPXE_WINDOW_WIDTH = 64
 MAX_IPXE_WINDOW_WIDTH = 74
 
-# Create new site config when connecting from unknown site
-AUTO_CREATE_NEW_SITES = getattr(settings, 'BOOTMGR_AUTO_CREATE_NEW_SITES', True)
-
 # The menu id used when creating new site configs
 NEW_SITE_MENU_ID = getattr(settings, 'BOOTMGR_NEW_SITE_MENU_ID', 1)
 
